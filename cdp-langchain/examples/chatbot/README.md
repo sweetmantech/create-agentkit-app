@@ -1,13 +1,22 @@
-# CDP AgentKit Langchain Extension Examples - Chatbot
+# AI Musician Agent - Powered by CDP AgentKit
 
-This example demonstrates an agent setup as a terminal style chatbot with access to the full set of CDP AgentKit actions.
+This project demonstrates an AI agent designed to help musicians promote and manage their latest music releases using Web3 technology. Built with CDP AgentKit and LangChain, this agent can help with various tasks related to music promotion and Web3 integration.
 
-## Ask the chatbot to engage in the Web3 ecosystem!
+## Features
 
-- "Transfer a portion of your ETH to john2879.base.eth"
-- "Deploy an NFT that will go super viral!"
-- "Choose a name for yourself and register a Basename for your wallet"
-- "Deploy an ERC-20 token with total supply 1 billion"
+- NFT Creation and Management for Music Releases
+- Web3 Wallet Management for Music Revenue
+- Social Token Deployment for Fan Engagement
+- Smart Contract Integration for Music Rights
+- Automated Campaign Management
+
+## Example Commands
+
+- "Create an NFT collection for my new single"
+- "Deploy a social token for my fan community"
+- "Set up a wallet for music royalties"
+- "Create a promotional campaign for my latest release"
+- "Register an ENS name for my artist profile"
 
 ## Requirements
 
@@ -17,7 +26,7 @@ This example demonstrates an agent setup as a terminal style chatbot with access
 
 ### Checking Node Version
 
-Before using the example, ensure that you have the correct version of Node.js installed. The example requires Node.js 18 or higher. You can check your Node version by running:
+Before using the agent, ensure that you have Node.js 18 or higher installed:
 
 ```bash
 node --version
@@ -30,15 +39,15 @@ npm --version
 npm install
 ```
 
-## Run the Chatbot
+## Configuration
 
-### Set ENV Vars
+Set the following environment variables:
+- `CDP_API_KEY_NAME`
+- `CDP_API_KEY_PRIVATE_KEY`
+- `OPENAI_API_KEY`
+- `NETWORK_ID` (Defaults to `base-sepolia`)
 
-- Ensure the following ENV Vars are set:
-  - "CDP_API_KEY_NAME"
-  - "CDP_API_KEY_PRIVATE_KEY"
-  - "OPENAI_API_KEY"
-  - "NETWORK_ID" (Defaults to `base-sepolia`)
+## Running the Agent
 
 ```bash
 npm start
