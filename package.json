@@ -1,17 +1,28 @@
 {
   "name": "create-agentkit-app",
   "description": "Create an AI Musician Agent powered by AgentKit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "sweetman.eth",
   "license": "MIT",
   "bin": {
-    "create-agentkit-app": "./bin/create-agentkit-app.js"
+    "create-agentkit-app": "bin/create-agentkit-app.js"
   },
   "files": [
     "bin/",
     "template/"
   ],
+  "scripts": {
+    "release": "changeset publish",
+    "version": "changeset version",
+    "changeset": "changeset"
+  },
   "dependencies": {
     "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.11"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
