@@ -1,58 +1,126 @@
-import { TwitterToolkit } from "@coinbase/twitter-langchain";
-import { TwitterAgentkit } from "@coinbase/cdp-agentkit-core";
+import { CdpAgentkit } from "@coinbase/cdp-agentkit-core";
+import { CdpToolkit } from "@coinbase/cdp-langchain";
 import { HumanMessage } from "@langchain/core/messages";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
 import * as dotenv from "dotenv";
+import * as fs from "fs";
 import * as readline from "readline";
 
 dotenv.config();
 
-const modifier = `
-  You are a helpful agent that can interact with the Twitter (X) API using the Coinbase Developer Platform Twitter (X) Agentkit.
-  You are empowered to interact with Twitter (X) using your tools.
+/**
+ * Validates that required environment variables are set
+ *
+ * @throws {Error} - If required environment variables are missing
+ * @returns {void}
+ */
+function validateEnvironment(): void {
+  const missingVars: string[] = [];
 
-  If someone asks you to do something you can't do with your currently available tools, you must say so, and encourage them to implement it themselves using the Twitter (X) API + Agentkit.
-  Recommend they go to https://developer.x.com/en/docs for more informaton.
+  // Check required variables
+  const requiredVars = ["OPENAI_API_KEY", "CDP_API_KEY_NAME", "CDP_API_KEY_PRIVATE_KEY"];
+  requiredVars.forEach(varName => {
+    if (!process.env[varName]) {
+      missingVars.push(varName);
+    }
+  });
 
-  Be concise and helpful with your responses.
-  Refrain from restating your tools' descriptions unless it is explicitly requested.
-`;
+  // Exit if any required variables are missing
+  if (missingVars.length > 0) {
+    console.error("Error: Required environment variables are not set");
+    missingVars.forEach(varName => {
+      console.error(`${varName}=your_${varName.toLowerCase()}_here`);
+    });
+    process.exit(1);
+  }
+
+  // Warn about optional NETWORK_ID
+  if (!process.env.NETWORK_ID) {
+    console.warn("Warning: NETWORK_ID not set, defaulting to base-sepolia testnet");
+  }
+}
+
+// Add this right after imports and before any other code
+validateEnvironment();
+
+// Configure a file to persist the agent's CDP MPC Wallet Data
+const WALLET_DATA_FILE = "wallet_data.txt";
 
 /**
- * Initialize the agent with Twitter (X) Agentkit
+ * Initialize the agent with CDP Agentkit
  *
  * @returns Agent executor and config
  */
-async function initialize() {
-  // Initialize LLM
-  const llm = new ChatOpenAI({ model: "gpt-4o-mini" });
+async function initializeAgent() {
+  try {
+    // Initialize LLM
+    const llm = new ChatOpenAI({
+      model: "gpt-4o-mini",
+    });
 
-  // Twitter (X) Agentkit
-  const twitterAgentkit = new TwitterAgentkit();
+    let walletDataStr: string | null = null;
 
-  // Twitter (X) Toolkit
-  const twitterToolkit = new TwitterToolkit(twitterAgentkit);
+    // Read existing wallet data if available
+    if (fs.existsSync(WALLET_DATA_FILE)) {
+      try {
+        walletDataStr = fs.readFileSync(WALLET_DATA_FILE, "utf8");
+      } catch (error) {
+        console.error("Error reading wallet data:", error);
+        // Continue without wallet data
+      }
+    }
 
-  // Twitter (X) tools
-  const tools = twitterToolkit.getTools();
+    // Configure CDP AgentKit
+    const config = {
+      cdpWalletData: walletDataStr || undefined,
+      networkId: process.env.NETWORK_ID || "base-sepolia",
+    };
 
-  // Store buffered conversation history in memory
-  const memory = new MemorySaver();
+    // Initialize CDP AgentKit
+    const agentkit = await CdpAgentkit.configureWithWallet(config);
 
-  // React Agent options
-  const agentConfig = { configurable: { thread_id: "Twitter Agentkit Chatbot Example!" } };
+    // Initialize CDP AgentKit Toolkit and get tools
+    const cdpToolkit = new CdpToolkit(agentkit);
+    const tools = cdpToolkit.getTools();
 
-  // Create React Agent using the LLM and Twitter (X) tools
-  const agent = createReactAgent({
-    llm,
-    tools,
-    checkpointSaver: memory,
-    messageModifier: modifier,
-  });
+    // Store buffered conversation history in memory
+    const memory = new MemorySaver();
+    const agentConfig = { configurable: { thread_id: "CDP AgentKit Chatbot Example!" } };
 
-  return { agent, config: agentConfig };
+    // Create React Agent using the LLM and CDP AgentKit tools
+    const agent = createReactAgent({
+      llm,
+      tools,
+      checkpointSaver: memory,
+      messageModifier: `
+        You are an AI Musician Agent designed to help musicians promote and manage their latest music releases using onchain technology. Your primary goal is to assist musicians in running successful campaigns for their latest singles.
+
+        Core capabilities:
+        - Create and manage NFT collections for music releases
+        - Set up and manage onchain wallets for music revenue
+        - Deploy social tokens for fan engagement
+        - Handle smart contracts for music rights
+        - Manage promotional campaigns for releases
+
+        If you ever need funds, you can request them from the faucet if you are on network ID 'base-sepolia'. If not, you can provide your wallet details and request funds from the user. Before executing your first action, get the wallet details to see what network you're on.
+
+        If there is a 5XX (internal) HTTP error code, ask the user to try again later. If someone asks you to do something you can't do with your currently available tools, you must say so, and encourage them to implement it themselves using the CDP SDK + Agentkit, recommend they go to docs.cdp.coinbase.com for more information.
+
+        Be concise and helpful with your responses. Focus on music industry-specific use cases and explain onchain concepts in terms that musicians would understand. Refrain from restating your tools' descriptions unless explicitly requested.
+        `,
+    });
+
+    // Save wallet data
+    const exportedWallet = await agentkit.exportWallet();
+    fs.writeFileSync(WALLET_DATA_FILE, exportedWallet);
+
+    return { agent, config: agentConfig };
+  } catch (error) {
+    console.error("Failed to initialize agent:", error);
+    throw error; // Re-throw to be handled by caller
+  }
 }
 
 /**
@@ -182,7 +250,7 @@ async function chooseMode(): Promise<"chat" | "auto"> {
  */
 async function main() {
   try {
-    const { agent, config } = await initialize();
+    const { agent, config } = await initializeAgent();
     const mode = await chooseMode();
 
     if (mode === "chat") {

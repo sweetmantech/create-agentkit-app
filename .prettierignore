@@ -4,4 +4,4 @@ coverage/
 .github/
 src/client
 **/**/*.json
-*.md
+*.md 
