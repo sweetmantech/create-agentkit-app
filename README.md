@@ -1,22 +1,25 @@
-# 🎵 AI Musician Agent - Powered by CDP AgentKit
+# 🎵 Create AI Musician Agent
 
-This project demonstrates an AI agent designed to help musicians promote and manage their latest music releases using Web3 technology. Built with CDP AgentKit and LangChain, this agent can help with various tasks related to music promotion and Web3 integration.
+Create an AI Musician Agent powered by CDP AgentKit with a single command. This tool helps you quickly set up an AI agent designed to help musicians promote and manage their music releases using onchain technology.
 
-## ✨ Features
+## 🚀 Quick Start
 
-- 🎼 NFT Creation and Management for Music Releases
-- 💰 Web3 Wallet Management for Music Revenue
-- 🎫 Social Token Deployment for Fan Engagement
-- 📝 Smart Contract Integration for Music Rights
-- 🚀 Automated Campaign Management
+```bash
+npx create-agentkit-app my-musician-agent
+cd my-musician-agent
+npm install
+npm start
+```
 
-## 💬 Example Commands
+## 🎼 What You Get
 
-- "Create an NFT collection for my new single"
-- "Deploy a social token for my fan community"
-- "Set up a wallet for music royalties"
-- "Create a promotional campaign for my latest release"
-- "Register an ENS name for my artist profile"
+Your new AI Musician Agent comes with:
+
+- NFT Creation and Management for Music Releases
+- Onchain Wallet Management for Music Revenue
+- Social Token Deployment for Fan Engagement
+- Smart Contract Integration for Music Rights
+- Automated Campaign Management
 
 ## 📋 Requirements
 
@@ -24,35 +27,39 @@ This project demonstrates an AI agent designed to help musicians promote and man
 - [CDP API Key](https://portal.cdp.coinbase.com/access/api)
 - [OpenAI API Key](https://platform.openai.com/docs/quickstart#create-and-export-an-api-key)
 
-### 🔍 Checking Node Version
-
-Before using the agent, ensure that you have Node.js 18 or higher installed:
-
-```bash
-node --version
-npm --version
-```
-
-## 🛠️ Installation
-
-```bash
-npm install
-```
-
 ## ⚙️ Configuration
 
-Set the following environment variables:
-- `CDP_API_KEY_NAME`
-- `CDP_API_KEY_PRIVATE_KEY`
-- `OPENAI_API_KEY`
-- `NETWORK_ID` (Defaults to `base-sepolia`)
+After creating your project, set up your environment variables:
 
-## 🚀 Running the Agent
+1. Copy `.env.example` to `.env`
+2. Fill in your API keys:
+   ```env
+   CDP_API_KEY_NAME=your_key_name_here
+   CDP_API_KEY_PRIVATE_KEY=your_private_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
+   NETWORK_ID=base-sepolia  # Optional, defaults to base-sepolia
+   ```
+
+## 💬 Example Commands
+
+Once running, try these commands:
+
+- "Create an NFT collection for my new single"
+- "Deploy a social token for my fan community"
+- "Set up a wallet for music royalties"
+- "Create a promotional campaign for my latest release"
+- "Register an ENS name for my artist profile"
+
+## 🛠️ Development
+
+Your project includes these npm scripts:
 
 ```bash
-npm start
+npm start     # Start the agent in interactive mode
+npm run dev   # Start with hot reload
+npm run lint  # Check code style
 ```
 
 ## 📄 License
 
-MIT
+MIT License - Created by sweetman.eth
