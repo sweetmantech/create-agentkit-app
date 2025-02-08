@@ -9,7 +9,7 @@ const projectName = process.argv[2];
 
 if (!projectName) {
   console.error("Please specify a project name:");
-  console.error("  npx create-agentkit-app my-musician-agent");
+  console.error("  npx create-agentkit-app my-agent");
   process.exit(1);
 }
 
@@ -17,9 +17,9 @@ if (!projectName) {
 const projectPath = path.join(process.cwd(), projectName);
 fs.mkdirSync(projectPath, { recursive: true });
 
-// Copy template files
-const templatePath = path.join(__dirname, "..", "template");
-copyDir(templatePath, projectPath);
+// Copy Eliza starter files
+const elizaStarterPath = path.join(__dirname, "..", "eliza-agentkit-starter");
+copyDir(elizaStarterPath, projectPath);
 
 // Initialize git repository
 execSync("git init", { cwd: projectPath });
@@ -29,25 +29,25 @@ console.log("Installing dependencies...");
 execSync("npm install", { cwd: projectPath, stdio: "inherit" });
 
 console.log(`
-🎵 Success! Created AI Musician Agent at ${projectPath}
+✨ Success! Created AI Agent with Eliza + AgentKit at ${projectPath}
 
 Inside that directory, you can run several commands:
 
   npm start
     Starts the agent in interactive mode
 
-  npm run dev
-    Starts the agent with hot reload
+  npm run build
+    Builds the agent for production
 
-  npm run lint
-    Checks code style
+  npm run clean
+    Cleans the build artifacts
 
 We suggest that you begin by typing:
 
   cd ${projectName}
   npm start
 
-Happy music making! 🎼
+Happy agent building! 🤖
 `);
 
 function copyDir(src, dest) {
