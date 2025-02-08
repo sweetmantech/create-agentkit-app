@@ -1,7 +1,7 @@
 {
   "name": "create-agentkit-app",
-  "description": "Create an AI Musician Agent powered by AgentKit",
-  "version": "1.0.1",
+  "description": "Create an AI Agent powered by AgentKit and Eliza",
+  "version": "2.1.2",
   "author": "sweetman.eth",
   "license": "MIT",
   "bin": {
@@ -9,7 +9,7 @@
   },
   "files": [
     "bin/",
-    "template/"
+    "eliza-agentkit-starter/"
   ],
   "scripts": {
     "release": "changeset publish",
@@ -20,7 +20,7 @@
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.11"
+    "@changesets/cli": "^2.27.12"
   },
   "publishConfig": {
     "access": "public"

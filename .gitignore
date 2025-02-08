@@ -2,3 +2,4 @@ instructions.md
 wallet_data.txt
 .env
 node_modules
+.DS_Store

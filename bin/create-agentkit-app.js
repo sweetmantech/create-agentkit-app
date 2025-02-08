@@ -9,7 +9,7 @@ const projectName = process.argv[2];
 
 if (!projectName) {
   console.error("Please specify a project name:");
-  console.error("  npx create-agentkit-app my-musician-agent");
+  console.error("  npx create-agentkit-app my-agent");
   process.exit(1);
 }
 
@@ -17,37 +17,50 @@ if (!projectName) {
 const projectPath = path.join(process.cwd(), projectName);
 fs.mkdirSync(projectPath, { recursive: true });
 
-// Copy template files
-const templatePath = path.join(__dirname, "..", "template");
-copyDir(templatePath, projectPath);
+// Copy Eliza starter files
+const elizaStarterPath = path.join(__dirname, "..", "eliza-agentkit-starter");
+copyDir(elizaStarterPath, projectPath);
+
+// Make scripts executable
+const scriptsPath = path.join(projectPath, "scripts");
+if (fs.existsSync(scriptsPath)) {
+  execSync(`chmod +x ${scriptsPath}/*.sh`, { cwd: projectPath });
+}
 
 // Initialize git repository
 execSync("git init", { cwd: projectPath });
 
 // Install dependencies
 console.log("Installing dependencies...");
-execSync("npm install", { cwd: projectPath, stdio: "inherit" });
+execSync("pnpm install", { cwd: projectPath, stdio: "inherit" });
 
 console.log(`
-🎵 Success! Created AI Musician Agent at ${projectPath}
+✨ Success! Created AI Agent with Eliza + AgentKit at ${projectPath}
 
-Inside that directory, you can run several commands:
+First, set up your environment variables:
 
-  npm start
+  cp .env.example .env
+  # Edit .env with your API keys and configuration
+
+Then you can run these commands:
+
+  pnpm start
     Starts the agent in interactive mode
 
-  npm run dev
-    Starts the agent with hot reload
+  pnpm run build
+    Builds the agent for production
 
-  npm run lint
-    Checks code style
+  pnpm run clean
+    Cleans the build artifacts
 
-We suggest that you begin by typing:
+We suggest that you begin by:
 
   cd ${projectName}
-  npm start
+  cp .env.example .env
+  # Edit .env with your API keys
+  pnpm start
 
-Happy music making! 🎼
+Happy agent building! 🤖
 `);
 
 function copyDir(src, dest) {

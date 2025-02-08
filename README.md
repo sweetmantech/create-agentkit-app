@@ -1,43 +1,45 @@
-# 🎵 Create AI Musician Agent
+# 🤖 Create AgentKit App
 
-Create an AI Musician Agent powered by CDP AgentKit with a single command. This tool helps you quickly set up an AI agent designed to help musicians promote and manage their music releases using onchain technology.
+Create an AI agent powered by Eliza and CDP AgentKit with a single command. This tool helps you quickly set up a powerful conversational AI agent that can be customized for your specific use case.
 
 ## 🚀 Quick Start
 
 ```bash
-npx create-agentkit-app my-musician-agent
-cd my-musician-agent
-npm install
-npm start
+npx create-agentkit-app my-agent
+cd my-agent
+cp .env.example .env
+# edit .env file with your own values
+pnpm install
+pnpm start
 ```
 
-## 🎼 What You Get
+## ✨ What You Get
 
-Your new AI Musician Agent comes with:
+Your new AI agent comes with:
 
-- NFT Creation and Management for Music Releases
-- Onchain Wallet Management for Music Revenue
-- Social Token Deployment for Fan Engagement
-- Smart Contract Integration for Music Rights
-- Automated Campaign Management
+- Eliza's powerful conversational capabilities
+- CDP AgentKit's robust agent framework
+- Multi-client support (Auto, Telegram, Twitter)
+- Extensible plugin system
+- Built-in caching and database support
+- Production-ready infrastructure
 
 ## 📋 Requirements
 
-- Node.js 18+
+- Node.js 22+
 - [CDP API Key](https://portal.cdp.coinbase.com/access/api)
-- [OpenAI API Key](https://platform.openai.com/docs/quickstart#create-and-export-an-api-key)
 
 ## ⚙️ Configuration
 
 After creating your project, set up your environment variables:
 
 1. Copy `.env.example` to `.env`
-2. Fill in your API keys:
+2. Set up your environment variables:
    ```env
    CDP_API_KEY_NAME=your_key_name_here
    CDP_API_KEY_PRIVATE_KEY=your_private_key_here
-   OPENAI_API_KEY=your_openai_api_key_here
-   NETWORK_ID=base-sepolia  # Optional, defaults to base-sepolia
+   CDP_AGENT_KIT_NETWORK=base-sepolia  # Optional, defaults to base-sepolia
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
    ```
 
 ## 💬 Example Commands
@@ -50,15 +52,16 @@ Once running, try these commands:
 - "Create a promotional campaign for my latest release"
 - "Register an ENS name for my artist profile"
 
-## 🛠️ Development
+## 🔌 Extending Your Agent
 
-Your project includes these npm scripts:
+The agent is built with Eliza and AgentKit, giving you access to:
 
-```bash
-npm start     # Start the agent in interactive mode
-npm run dev   # Start with hot reload
-npm run lint  # Check code style
-```
+- Customizable character definitions
+- Multiple messaging clients
+- Extensible plugin system
+- Database adapters
+- Caching system
+- Production deployment tools
 
 ## 📄 License
 
