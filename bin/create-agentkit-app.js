@@ -21,6 +21,12 @@ fs.mkdirSync(projectPath, { recursive: true });
 const elizaStarterPath = path.join(__dirname, "..", "eliza-agentkit-starter");
 copyDir(elizaStarterPath, projectPath);
 
+// Make scripts executable
+const scriptsPath = path.join(projectPath, "scripts");
+if (fs.existsSync(scriptsPath)) {
+  execSync(`chmod +x ${scriptsPath}/*.sh`, { cwd: projectPath });
+}
+
 // Initialize git repository
 execSync("git init", { cwd: projectPath });
 
