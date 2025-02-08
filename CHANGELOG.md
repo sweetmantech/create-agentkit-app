@@ -1,5 +1,12 @@
 # create-agentkit-app
 
+## 2.1.1
+
+### Patch Changes
+
+- Bug Fix for cache / db error on start from unclean publishing.
+- Clean.
+
 ## 2.1.0
 
 ### Minor Changes
