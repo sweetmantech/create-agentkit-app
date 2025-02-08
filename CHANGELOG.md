@@ -1,5 +1,16 @@
 # create-agentkit-app
 
+## 2.1.0
+
+### Minor Changes
+
+- remove wallet_data.txt file from the template
+- update character.ts to remove model preference
+- update README.md
+- remove /template folder
+- Remove unused packages from the app
+- Update command success message in bin script
+
 ## 2.0.0
 
 ### Major Changes

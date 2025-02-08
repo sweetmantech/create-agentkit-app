@@ -1,7 +1,7 @@
 {
   "name": "create-agentkit-app",
   "description": "Create an AI Agent powered by AgentKit and Eliza",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "sweetman.eth",
   "license": "MIT",
   "bin": {
