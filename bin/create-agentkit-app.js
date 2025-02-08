@@ -26,26 +26,33 @@ execSync("git init", { cwd: projectPath });
 
 // Install dependencies
 console.log("Installing dependencies...");
-execSync("npm install", { cwd: projectPath, stdio: "inherit" });
+execSync("pnpm install", { cwd: projectPath, stdio: "inherit" });
 
 console.log(`
 ✨ Success! Created AI Agent with Eliza + AgentKit at ${projectPath}
 
-Inside that directory, you can run several commands:
+First, set up your environment variables:
 
-  npm start
+  cp .env.example .env
+  # Edit .env with your API keys and configuration
+
+Then you can run these commands:
+
+  pnpm start
     Starts the agent in interactive mode
 
-  npm run build
+  pnpm run build
     Builds the agent for production
 
-  npm run clean
+  pnpm run clean
     Cleans the build artifacts
 
-We suggest that you begin by typing:
+We suggest that you begin by:
 
   cd ${projectName}
-  npm start
+  cp .env.example .env
+  # Edit .env with your API keys
+  pnpm start
 
 Happy agent building! 🤖
 `);
